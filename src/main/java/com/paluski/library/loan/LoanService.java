@@ -24,7 +24,7 @@ public class LoanService {
     @Autowired
     IBookCopyRepository bookCopyRepository;
 
-    public void createLoan(LoanDTO loanDTO){
+    public LoanDTO createLoan(LoanDTO loanDTO){
 
         User existUser = userRepository.findById(loanDTO.getFk_user())
                 .orElseThrow(() -> new EntityNotFoundException("User not found!"));
@@ -33,13 +33,14 @@ public class LoanService {
                 .orElseThrow(() -> new EntityNotFoundException("Book Copy not found!"));
 
         loanRepository.save(LoanMapper.toNormalLoan(loanDTO, existUser, existBookCopy));
+        return loanDTO;
     }
 
     public List<Loan> getLoans(){
         return loanRepository.findAll();
     }
 
-    public void editLoan(Long id, LoanDTO loanDTO){
+    public LoanDTO editLoan(Long id, LoanDTO loanDTO){
         LoanDTO existLoan = LoanMapper.toDTO(loanRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Loan not found!")));
         User existUser = userRepository.findById(existLoan.getFk_user()).orElseThrow(() -> new EntityNotFoundException("User not found!"));
         BookCopy existBookCopy = bookCopyRepository.findById(existLoan.getFk_book_copy()).orElseThrow(() -> new EntityNotFoundException("User not found!"));
@@ -49,6 +50,8 @@ public class LoanService {
         existLoan.setFk_book_copy(loanDTO.getFk_book_copy());
         existLoan.setFk_user(loanDTO.getFk_user());
         loanRepository.save(LoanMapper.toNormalLoan(existLoan, existUser, existBookCopy));
+
+        return existLoan;
     }
 
     public void deleteLoan(Long id){

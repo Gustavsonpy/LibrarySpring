@@ -17,13 +17,12 @@ public class LoanController {
     LoanService loanService;
 
     @PostMapping("/v1/newLoan")
-    public ResponseEntity<String> postLoan(@RequestBody LoanDTO loanDTO){
+    public ResponseEntity<LoanDTO> postLoan(@RequestBody LoanDTO loanDTO){
         try{
-            loanService.createLoan(loanDTO);
+            return ResponseEntity.ok(loanService.createLoan(loanDTO));
         }catch (Exception e){
-               return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error to create Loan: "+e.getMessage());
+               return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok("Loan created successfully!");
     }
 
     @GetMapping("/v1/getLoans")
@@ -32,13 +31,13 @@ public class LoanController {
     }
 
     @PutMapping("/v1/editLoan/{id}")
-    public ResponseEntity<String> editLoan(@PathVariable Long id, @RequestBody LoanDTO loanDTO){
+    public ResponseEntity<LoanDTO> editLoan(@PathVariable Long id, @RequestBody LoanDTO loanDTO){
         try{
             loanService.editLoan(id, loanDTO);
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Loan not found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok("Loan edited successfully!");
+        return ResponseEntity.ok(loanDTO);
     }
 
     @DeleteMapping("/v1/deleteLoan/{id}")
