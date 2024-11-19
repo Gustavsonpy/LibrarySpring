@@ -14,7 +14,6 @@ public class Loan {
     @Column(name = "loan_id")
     private Long id;
 
-    private String name;
     private Date loan_date;
     private Date return_date;
 
@@ -29,9 +28,8 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(Long id, String name, Date loan_date, Date return_date, User fk_user, BookCopy fk_book_copy) {
+    public Loan(Long id, Date loan_date, Date return_date, User fk_user, BookCopy fk_book_copy) {
         this.id = id;
-        this.name = name;
         this.loan_date = loan_date;
         this.return_date = return_date;
         this.fk_user = fk_user;
@@ -45,14 +43,6 @@ public class Loan {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getLoan_date() {

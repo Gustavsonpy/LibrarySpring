@@ -6,21 +6,18 @@ import jakarta.transaction.Transactional;
 
 import java.util.Date;
 
-@Transactional
 public class LoanDTO {
     private Long id;
-    private String name;
     private Date loan_date;
     private Date return_date;
-    private User fk_user;
-    private BookCopy fk_book_copy;
+    private Long fk_user;
+    private Long fk_book_copy;
 
     public LoanDTO() {
     }
 
-    public LoanDTO(Long id, String name, Date loan_date, Date return_date, User fk_user, BookCopy fk_book_copy) {
+    public LoanDTO(Long id, Date loan_date, Date return_date, Long fk_user, Long fk_book_copy) {
         this.id = id;
-        this.name = name;
         this.loan_date = loan_date;
         this.return_date = return_date;
         this.fk_user = fk_user;
@@ -36,14 +33,6 @@ public class LoanDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getLoan_date() {
@@ -62,19 +51,19 @@ public class LoanDTO {
         this.return_date = return_date;
     }
 
-    public User getFk_user() {
+    public Long getFk_user() {
         return fk_user;
     }
 
-    public void setFk_user(User fk_user) {
+    public void setFk_user(Long fk_user) {
         this.fk_user = fk_user;
     }
 
-    public BookCopy getFk_book_copy() {
+    public Long getFk_book_copy() {
         return fk_book_copy;
     }
 
-    public void setFk_book_copy(BookCopy fk_book_copy) {
+    public void setFk_book_copy(Long fk_book_copy) {
         this.fk_book_copy = fk_book_copy;
     }
 }
