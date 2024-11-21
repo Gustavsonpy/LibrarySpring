@@ -18,12 +18,12 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/v1/newUser")
-    public ResponseEntity<String> postUser(@RequestBody User user){
+    public ResponseEntity<User> postUser(@RequestBody User user){
         try{
             userService.createUser(user);
-            return ResponseEntity.ok("User created Successfully!");
+            return ResponseEntity.ok(user);
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(user);
         }
     }
 
@@ -33,12 +33,12 @@ public class UserController {
     }
 
     @PutMapping("/v1/editUser/{id}")
-    public ResponseEntity<String> putUser(@PathVariable Long id, @RequestBody User user){
+    public ResponseEntity<User> putUser(@PathVariable Long id, @RequestBody User user){
         try{
             userService.editUser(id, user);
-            return ResponseEntity.ok("User edited successfully!");
+            return ResponseEntity.ok(user);
         }catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
         }
     }
 

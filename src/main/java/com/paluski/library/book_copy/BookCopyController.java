@@ -1,5 +1,6 @@
 package com.paluski.library.book_copy;
 
+import com.paluski.library.book.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,13 @@ public class BookCopyController {
     BookCopyService bookCopyService;
 
     @PostMapping("/v1/newBookCopy")
-    public ResponseEntity<String> postBookCopy(@RequestBody BookCopyDTO bookCopyDTO){
+    public ResponseEntity<BookCopyDTO> postBookCopy(@RequestBody BookCopyDTO bookCopyDTO){
         try{
             bookCopyService.createBookCopy(bookCopyDTO);
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(bookCopyDTO);
         }
-        return ResponseEntity.ok().body("Book copy created successfully!");
+        return ResponseEntity.ok().body(bookCopyDTO);
     }
 
     @GetMapping("/v1/getBooksCopies")
@@ -30,12 +31,12 @@ public class BookCopyController {
     }
 
     @PutMapping("v1/editBookCopy/{id}")
-    public ResponseEntity<String> putBookCopy(@PathVariable Long id, @RequestBody BookCopyDTO bookCopyDTO){
+    public ResponseEntity<BookCopyDTO> putBookCopy(@PathVariable Long id, @RequestBody BookCopyDTO bookCopyDTO){
         try{
             bookCopyService.editBookCopy(id, bookCopyDTO);
-            return ResponseEntity.status(HttpStatus.OK).body("Book copy "+id+" edited successfully!");
+            return ResponseEntity.status(HttpStatus.OK).body(bookCopyDTO);
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error to edit Book Copy: "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(bookCopyDTO);
         }
     }
 

@@ -16,12 +16,12 @@ public class BookController {
     BookService bookService;
 
     @PostMapping("/v1/newBook")
-    public ResponseEntity<String> postBook(@RequestBody BookDTO bookDTO){
+    public ResponseEntity<BookDTO> postBook(@RequestBody BookDTO bookDTO){
         try{
             bookService.createBook(bookDTO);
-            return ResponseEntity.ok("Book created Successfully!");
+            return ResponseEntity.ok(bookDTO);
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(bookDTO);
         }
     }
 
